@@ -197,22 +197,64 @@
             <div class="w-full max-w-none sm:max-w-3xl mx-auto mb-16 text-center" style="padding: 0 1rem;">
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-dark" style="font-size: clamp(1.5rem, 3vw, 2.5rem); -moz-font-feature-settings: 'kern' 1; -webkit-font-feature-settings: 'kern' 1; font-feature-settings: 'kern' 1;">业务概览</h2>
                 <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
-                <p class="overview-text text-neutral-700 leading-relaxed" style="font-size: 14px; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto; -ms-hyphens: auto; width: 100%; max-width: 100%; box-sizing: border-box; display: block; margin: 0 auto; padding: 0;">
-                    WEPhoneShop作为西班牙手机配件批发与定制领域的华人企业，已具备"行业经验+社媒基础+官网阵地"的核心优势，但在用户体验、内容互动、SEO排名和渠道整合方面仍有较大优化空间。
-                </p>
+                <div class="overview-text-container bg-white rounded-xl shadow-sm border border-neutral-100 p-6 mx-auto" style="max-width: 100%; box-sizing: border-box; position: relative; overflow: visible; z-index: 1;">
+                    <p class="overview-text text-neutral-700 leading-relaxed m-0" style="font-size: 16px; line-height: 1.7; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto; -ms-hyphens: auto; width: 100%; box-sizing: border-box; display: block; padding: 0; position: relative; z-index: 2; overflow: visible;">
+                        WEPhoneShop作为西班牙手机配件批发与定制领域的华人企业，已具备"行业经验+社媒基础+官网阵地"的核心优势，但在用户体验、内容互动、SEO排名和渠道整合方面仍有较大优化空间。
+                    </p>
+                </div>
                 <style>
+                    /* 底框容器样式 */
+                    .overview-text-container {
+                        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+                        transition: all 0.3s ease;
+                        position: relative !important;
+                        overflow: visible !important;
+                        z-index: 1 !important;
+                    }
+                    
+                    .overview-text-container:hover {
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.15);
+                        transform: translateY(-1px);
+                    }
+                    
+                    .overview-text {
+                        position: relative !important;
+                        z-index: 2 !important;
+                        overflow: visible !important;
+                    }
+                    
                     @media screen and (min-width: 640px) {
                         .overview-text {
-                            font-size: 16px !important;
-                            line-height: 1.7 !important;
+                            font-size: 17px !important;
+                            line-height: 1.8 !important;
+                        }
+                        .overview-text-container {
+                            padding: 2rem !important;
                         }
                     }
                     @media screen and (min-width: 1024px) {
                         .overview-text {
                             font-size: 18px !important;
-                            line-height: 1.8 !important;
+                            line-height: 1.9 !important;
+                        }
+                        .overview-text-container {
+                            padding: 2.5rem !important;
                         }
                     }
+                    
+                    /* 移动端优化 */
+                    @media screen and (max-width: 639px) {
+                        .overview-text-container {
+                            margin: 0 0.5rem !important;
+                            padding: 1.25rem !important;
+                        }
+                        .overview-text {
+                            font-size: 15px !important;
+                            line-height: 1.6 !important;
+                        }
+                    }
+                    
                     /* Firefox特定优化 */
                     @-moz-document url-prefix() {
                         .overview-text {
@@ -220,7 +262,23 @@
                             white-space: normal !important;
                             overflow: visible !important;
                             text-overflow: clip !important;
+                            position: relative !important;
+                            z-index: 2 !important;
                         }
+                        .overview-text-container {
+                            display: block !important;
+                            width: 100% !important;
+                            position: relative !important;
+                            overflow: visible !important;
+                            z-index: 1 !important;
+                        }
+                    }
+                    
+                    /* 通用浏览器兼容性修复 */
+                    .overview-text-container, .overview-text {
+                        transform: translateZ(0);
+                        -webkit-transform: translateZ(0);
+                        will-change: auto;
                     }
                 </style>
             </div>
