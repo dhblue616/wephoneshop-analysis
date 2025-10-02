@@ -58,6 +58,51 @@
                 scrollbar-width: none;
             }
         }
+        
+        /* Firefox全局兼容性优化 */
+        @-moz-document url-prefix() {
+            * {
+                box-sizing: border-box !important;
+            }
+            
+            p, div, span, h1, h2, h3, h4, h5, h6 {
+                word-wrap: break-word !important;
+                overflow-wrap: break-word !important;
+                hyphens: auto !important;
+                -moz-hyphens: auto !important;
+                word-break: break-word !important;
+                white-space: normal !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+            }
+            
+            .container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+            
+            /* 确保clamp函数在Firefox中正常工作 */
+            h1, h2, h3, h4, h5, h6 {
+                font-size: 1.5rem !important;
+            }
+            
+            @media screen and (min-width: 640px) {
+                h1 { font-size: 2.5rem !important; }
+                h2 { font-size: 2rem !important; }
+                h3 { font-size: 1.75rem !important; }
+                h4 { font-size: 1.5rem !important; }
+            }
+            
+            @media screen and (min-width: 1024px) {
+                h1 { font-size: 3.5rem !important; }
+                h2 { font-size: 2.5rem !important; }
+                h3 { font-size: 2rem !important; }
+                h4 { font-size: 1.75rem !important; }
+            }
+        }
     </style>
 </head>
 <body class="font-inter bg-light text-dark antialiased">
@@ -102,10 +147,10 @@
     <section class="pt-28 pb-20 bg-gradient-to-br from-primary/90 to-primary">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white mb-6 leading-tight text-shadow">
+                <h1 class="hero-title font-bold text-white mb-6 leading-tight text-shadow" style="font-size: 2rem; line-height: 1.2; word-wrap: break-word; overflow-wrap: break-word;">
                     WEPhoneShop.es<br>数据分析与战略可视化
                 </h1>
-                <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 leading-relaxed">
+                <p class="hero-subtitle text-white/90 mb-8 leading-relaxed" style="font-size: 1rem; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word;">
                     深入解析核心问题，展示战略方向，助力业务增长
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
@@ -116,6 +161,25 @@
                         查看战略 <i class="fa fa-lightbulb-o ml-2"></i>
                     </a>
                 </div>
+                <style>
+                    @media screen and (min-width: 640px) {
+                        .hero-title { font-size: 2.5rem !important; }
+                        .hero-subtitle { font-size: 1.125rem !important; }
+                    }
+                    @media screen and (min-width: 1024px) {
+                        .hero-title { font-size: 3.5rem !important; }
+                        .hero-subtitle { font-size: 1.25rem !important; }
+                    }
+                    /* Firefox特定优化 */
+                    @-moz-document url-prefix() {
+                        .hero-title, .hero-subtitle {
+                            word-break: break-word !important;
+                            white-space: normal !important;
+                            overflow: visible !important;
+                            text-overflow: clip !important;
+                        }
+                    }
+                </style>
             </div>
         </div>
         
@@ -130,12 +194,35 @@
     <!-- 战略概览 -->
     <section id="overview" class="py-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mx-auto mb-16 text-center">
-                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 text-dark">业务概览</h2>
+            <div class="w-full max-w-none sm:max-w-3xl mx-auto mb-16 text-center" style="padding: 0 1rem;">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-dark" style="font-size: clamp(1.5rem, 3vw, 2.5rem); -moz-font-feature-settings: 'kern' 1; -webkit-font-feature-settings: 'kern' 1; font-feature-settings: 'kern' 1;">业务概览</h2>
                 <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
-                <p class="text-neutral-700 text-sm sm:text-base lg:text-lg leading-relaxed sm:leading-loose px-2 sm:px-0">
+                <p class="overview-text text-neutral-700 leading-relaxed" style="font-size: 14px; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; -moz-hyphens: auto; -ms-hyphens: auto; width: 100%; max-width: 100%; box-sizing: border-box; display: block; margin: 0 auto; padding: 0;">
                     WEPhoneShop作为西班牙手机配件批发与定制领域的华人企业，已具备"行业经验+社媒基础+官网阵地"的核心优势，但在用户体验、内容互动、SEO排名和渠道整合方面仍有较大优化空间。
                 </p>
+                <style>
+                    @media screen and (min-width: 640px) {
+                        .overview-text {
+                            font-size: 16px !important;
+                            line-height: 1.7 !important;
+                        }
+                    }
+                    @media screen and (min-width: 1024px) {
+                        .overview-text {
+                            font-size: 18px !important;
+                            line-height: 1.8 !important;
+                        }
+                    }
+                    /* Firefox特定优化 */
+                    @-moz-document url-prefix() {
+                        .overview-text {
+                            word-break: break-word !important;
+                            white-space: normal !important;
+                            overflow: visible !important;
+                            text-overflow: clip !important;
+                        }
+                    }
+                </style>
             </div>
             
             <!-- 核心优势 -->
