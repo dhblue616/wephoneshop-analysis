@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEPhoneShop.es - 数据分析与战略可视化</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#FF7D00',
+                        dark: '#1D2939',
+                        light: '#F9FAFB',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        'neutral-100': '#F3F4F6',
+                        'neutral-200': '#E5E7EB',
+                        'neutral-300': '#D1D5DB',
+                        'neutral-600': '#4B5563',
+                        'neutral-700': '#374151',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-light text-dark antialiased">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa fa-mobile text-primary text-3xl"></i>
+                    <span class="text-xl font-bold text-primary">WEPhoneShop</span>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#overview" class="text-neutral-700 hover:text-primary transition-colors font-medium">概述</a>
+                    <a href="#website" class="text-neutral-700 hover:text-primary transition-colors font-medium">官网分析</a>
+                    <a href="#social" class="text-neutral-700 hover:text-primary transition-colors font-medium">社交媒体</a>
+                    <a href="#seo" class="text-neutral-700 hover:text-primary transition-colors font-medium">SEO表现</a>
+                    <a href="#strategy" class="text-neutral-700 hover:text-primary transition-colors font-medium">战略方向</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menu-toggle" class="md:hidden text-neutral-700 hover:text-primary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-3 space-y-3">
+                <a href="#overview" class="block text-neutral-700 hover:text-primary transition-colors font-medium py-2">概述</a>
+                <a href="#website" class="block text-neutral-700 hover:text-primary transition-colors font-medium py-2">官网分析</a>
+                <a href="#social" class="block text-neutral-700 hover:text-primary transition-colors font-medium py-2">社交媒体</a>
+                <a href="#seo" class="block text-neutral-700 hover:text-primary transition-colors font-medium py-2">SEO表现</a>
+                <a href="#strategy" class="block text-neutral-700 hover:text-primary transition-colors font-medium py-2">战略方向</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="pt-28 pb-20 bg-gradient-to-br from-primary/90 to-primary">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white mb-6 leading-tight text-shadow">
+                    WEPhoneShop.es<br>数据分析与战略可视化
+                </h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 leading-relaxed">
+                    深入解析核心问题，展示战略方向，助力业务增长
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#overview" class="bg-white text-primary px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
+                        开始探索 <i class="fa fa-arrow-down ml-2"></i>
+                    </a>
+                    <a href="#strategy" class="bg-secondary text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
+                        查看战略 <i class="fa fa-lightbulb-o ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 波浪装饰 -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" class="w-full h-auto fill-light">
+                <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 战略概览 -->
+    <section id="overview" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 text-dark">业务概览</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-neutral-700 text-lg leading-relaxed">
+                    WEPhoneShop作为西班牙手机配件批发与定制领域的华人企业，已具备"行业经验+社媒基础+官网阵地"的核心优势，
+                    但在用户体验、内容互动、SEO排名和渠道整合方面仍有较大优化空间。
+                </p>
+            </div>
+            
+            <!-- 核心优势 -->
+            <div class="bg-white rounded-xl shadow-md p-8 mb-16">
+                <h3 class="text-xl font-semibold mb-8 text-center">核心优势</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center card-hover p-6 rounded-lg border border-neutral-100">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-building text-primary text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">品牌价值清晰</h4>
+                        <p class="text-neutral-600 text-sm">
+                            "关于我们"页面明确使命、创始人15年批发经验及2015年马德里创立背景，强化B2B客户信任
+                        </p>
+                    </div>
+                    
+                    <div class="text-center card-hover p-6 rounded-lg border border-neutral-100">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-th text-primary text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">产品分类精准</h4>
+                        <p class="text-neutral-600 text-sm">
+                            按"品牌→机型"细分，契合批发商"快速找型号"的需求，采购效率高
+                        </p>
+                    </div>
+                    
+                    <div class="text-center card-hover p-6 rounded-lg border border-neutral-100">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-comments text-primary text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">联系方式完整</h4>
+                        <p class="text-neutral-600 text-sm">
+                            提供固定电话、WhatsApp、邮箱、营业时间、仓库地址及社媒链接，客户触达路径通畅
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 业务数据概览 -->
+            <div class="bg-white rounded-xl shadow-md p-8">
+                <h3 class="text-xl font-semibold mb-8 text-center">业务数据概览</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-medium text-lg mb-4">社交媒体粉丝分布</h4>
+                        <div class="h-64">
+                            <canvas id="socialMediaChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-lg mb-4">核心关键词排名</h4>
+                        <div class="h-64">
+                            <canvas id="keywordRankingChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 官网分析部分 -->
+    <section id="website" class="py-20 bg-neutral-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 text-dark">官网分析</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-neutral-700 text-lg leading-relaxed">
+                    官网作为WEPhoneShop的核心转化阵地，承担"品牌展示、产品查询、定制引导、客户联系"四大功能
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-md p-8 h-full">
+                        <h3 class="text-xl font-semibold mb-6 flex items-center">
+                            <i class="fa fa-exclamation-triangle text-danger mr-2"></i> 亟需改进的问题
+                        </h3>
+                        
+                        <div class="space-y-8">
+                            <!-- 导航与搜索体验 -->
+                            <div>
+                                <h4 class="font-medium text-lg mb-3">导航与搜索体验</h4>
+                                <div class="bg-neutral-50 p-5 rounded-lg">
+                                    <ul class="space-y-2 text-neutral-700">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                            <span>"品牌→机型"层级过深、列表冗长，首次访问者易迷失</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                            <span>无显眼搜索框与筛选器，关键词定位难</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- 性能优化 -->
+                            <div>
+                                <h4 class="font-medium text-lg mb-3">性能优化</h4>
+                                <div class="bg-neutral-50 p-5 rounded-lg">
+                                    <ul class="space-y-2 text-neutral-700">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                            <span>首页代码超2000行，图片/脚本加载量大</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                            <span>页面速度慢，影响SEO排名与用户留存</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- SEO与内容营销 -->
+                            <div>
+                                <h4 class="font-medium text-lg mb-3">SEO与内容营销</h4>
+                                <div class="bg-neutral-50 p-5 rounded-lg">
+                                    <ul class="space-y-2 text-neutral-700">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                            <span>产品页元标签（Title/Meta Description）重复</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                            <span>图片无Alt文本，无结构化数据</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                            <span>缺乏博客引流</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- 其他问题 -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-medium text-lg mb-3">多语言支持</h4>
+                                    <div class="bg-neutral-50 p-5 rounded-lg">
+                                        <ul class="space-y-2 text-neutral-700">
+                                            <li class="flex items-start">
+                                                <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                                <span>仅西班牙语，错失华人及国际客户</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-medium text-lg mb-3">转化与营销</h4>
+                                    <div class="bg-neutral-50 p-5 rounded-lg">
+                                        <ul class="space-y-2 text-neutral-700">
+                                            <li class="flex items-start">
+                                                <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                                <span>强制注册查看价格，劝退潜在客户</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fa fa-circle text-danger text-xs mt-1.5 mr-2"></i>
+                                                <span>无快速"加购/询价"按钮，即时咨询入口不突出</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-white rounded-xl shadow-md p-8 h-full">
+                        <h3 class="text-xl font-semibold mb-6 flex items-center">
+                            <i class="fa fa-wrench text-primary mr-2"></i> 优化方向
+                        </h3>
+                        
+                        <div class="space-y-6">
+                            <div class="border-l-4 border-primary pl-4 py-1">
+                                <h4 class="font-medium">导航与搜索升级</h4>
+                                <p class="text-neutral-600 text-sm mt-1">
+                                    添加多维度筛选器，缩短查找路径；页面顶部放置显眼搜索框
+                                </p>
+                            </div>
+                            
+                            <div class="border-l-4 border-primary pl-4 py-1">
+                                <h4 class="font-medium">性能优化</h4>
+                                <p class="text-neutral-600 text-sm mt-1">
+                                    压缩图片、合并CSS/JS文件，启用浏览器缓存，接入本地CDN
+                                </p>
+                            </div>
+                            
+                            <div class="border-l-4 border-primary pl-4 py-1">
+                                <h4 class="font-medium">SEO基础强化</h4>
+                                <p class="text-neutral-600 text-sm mt-1">
+                                    设置独特元标签，添加图片Alt文本，配置结构化数据，开设博客栏目
+                                </p>
+                            </div>
+                            
+                            <div class="border-l-4 border-primary pl-4 py-1">
+                                <h4 class="font-medium">转化路径优化</h4>
+                                <p class="text-neutral-600 text-sm mt-1">
+                                    调整注册策略，新增明显的"加购/询价"按钮，突出展示即时咨询入口
+                                </p>
+                            </div>
+                            
+                            <div class="border-l-4 border-primary pl-4 py-1">
+                                <h4 class="font-medium">多语言支持</h4>
+                                <p class="text-neutral-600 text-sm mt-1">
+                                    开发中文和英文版本，覆盖华人及国际市场
+                                </p>
+                            </div>
+                            
+                            <div class="border-l-4 border-primary pl-4 py-1">
+                                <h4 class="font-medium">数据分析部署</h4>
+                                <p class="text-neutral-600 text-sm mt-1">
+                                    安装Google Analytics 4，监测全路径转化，设置自动化营销
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 网站性能指标 -->
+            <div class="bg-white rounded-xl shadow-md p-8">
+                <h3 class="text-xl font-semibold mb-6 flex items-center">
+                    <i class="fa fa-tachometer text-primary mr-2"></i> 网站性能指标
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="bg-neutral-50 p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold text-danger mb-2">3.2s</div>
+                        <p class="text-sm font-medium">平均加载时间</p>
+                        <p class="text-xs text-neutral-500 mt-1">行业平均: 1.8s</p>
+                    </div>
+                    
+                    <div class="bg-neutral-50 p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold text-danger mb-2">2000+</div>
+                        <p class="text-sm font-medium">首页代码行数</p>
+                        <p class="text-xs text-neutral-500 mt-1">行业平均: 800-1200</p>
+                    </div>
+                    
+                    <div class="bg-neutral-50 p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold text-warning mb-2">65%</div>
+                        <p class="text-sm font-medium">移动端适配率</p>
+                        <p class="text-xs text-neutral-500 mt-1">目标: 90%+</p>
+                    </div>
+                    
+                    <div class="bg-neutral-50 p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold text-danger mb-2">45%</div>
+                        <p class="text-sm font-medium">SEO基础得分</p>
+                        <p class="text-xs text-neutral-500 mt-1">目标: 80%+</p>
+                    </div>
+                    
+                    <div class="bg-neutral-50 p-6 rounded-lg text-center">
+                        <div class="text-4xl font-bold text-danger mb-2">3.5%</div>
+                        <p class="text-sm font-medium">转化率</p>
+                        <p class="text-xs text-neutral-500 mt-1">行业平均: 6.2%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社交媒体分析部分 -->
+    <section id="social" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 text-dark">社交媒体分析</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-neutral-700 text-lg leading-relaxed">
+                    WEPhoneShop已布局多个社交平台，但各渠道表现不均衡，需针对性优化
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- TikTok -->
+                <div class="bg-white rounded-xl shadow-md p-8 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-[#000000] rounded-full flex items-center justify-center mr-4">
+                            <i class="fa fa-tiktok text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">TikTok (@wephoneoficial)</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">1.33万</p>
+                            <p class="text-sm text-neutral-600">粉丝数</p>
+                        </div>
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">1.78万</p>
+                            <p class="text-sm text-neutral-600">获赞</p>
+                        </div>
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">180+</p>
+                            <p class="text-sm text-neutral-600">视频数</p>
+                        </div>
+                    </div>
+                    
+                    <h4 class="font-medium mb-3">核心问题</h4>
+                    <div class="bg-neutral-50 p-5 rounded-lg mb-6">
+                        <ul class="space-y-2 text-neutral-700 text-sm">
+                            <li>• 内容形式单一，多为静态产品展示</li>
+                            <li>• 互动性弱，评论回复不及时</li>
+                            <li>• 标签与趋势利用不足</li>
+                            <li>• 测试类视频播放量高(3-6万)，常规视频低(500-5K)</li>
+                        </ul>
+                    </div>
+                    
+                    <h4 class="font-medium mb-3">优化方向</h4>
+                    <div class="text-neutral-700 text-sm">
+                        <p>• 强化场景与故事，增加教程与知识类内容</p>
+                        <p>• 视频描述结尾添加提问引导评论</p>
+                        <p>• 每条视频添加精准标签组合</p>
+                    </div>
+                </div>
+                
+                <!-- Instagram -->
+                <div class="bg-white rounded-xl shadow-md p-8 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-[#E1306C] rounded-full flex items-center justify-center mr-4">
+                            <i class="fa fa-instagram text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Instagram (@wephoneshop.es)</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">809</p>
+                            <p class="text-sm text-neutral-600">粉丝数</p>
+                        </div>
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">142</p>
+                            <p class="text-sm text-neutral-600">帖子数</p>
+                        </div>
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">低</p>
+                            <p class="text-sm text-neutral-600">互动率</p>
+                        </div>
+                    </div>
+                    
+                    <h4 class="font-medium mb-3">核心问题</h4>
+                    <div class="bg-neutral-50 p-5 rounded-lg mb-6">
+                        <ul class="space-y-2 text-neutral-700 text-sm">
+                            <li>• 内容单一，仅静态图册</li>
+                            <li>• 互动性低，粉丝增长缓慢</li>
+                            <li>• 未利用Reels短视频功能</li>
+                        </ul>
+                    </div>
+                    
+                    <h4 class="font-medium mb-3">优化方向</h4>
+                    <div class="text-neutral-700 text-sm">
+                        <p>• 新增Reels短视频，加入生活场景内容</p>
+                        <p>• 使用精准标签，与相关账号互推</p>
+                        <p>• 引导UGC内容创作，增强用户粘性</p>
+                    </div>
+                </div>
+                
+                <!-- YouTube -->
+                <div class="bg-white rounded-xl shadow-md p-8 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-[#FF0000] rounded-full flex items-center justify-center mr-4">
+                            <i class="fa fa-youtube-play text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">YouTube (Wephoneshop)</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">24</p>
+                            <p class="text-sm text-neutral-600">订阅数</p>
+                        </div>
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">15</p>
+                            <p class="text-sm text-neutral-600">视频数</p>
+                        </div>
+                        <div class="bg-neutral-50 p-4 rounded-lg">
+                            <p class="text-2xl font-bold">低</p>
+                            <p class="text-sm text-neutral-600">播放量</p>
+                        </div>
+                    </div>
+                    
+                    <h4 class="font-medium mb-3">核心问题</h4>
+                    <div class="bg-neutral-50 p-5 rounded-lg mb-6">
+                        <ul class="space-y-2 text-neutral-700 text-sm">
+                            <li>• 更新频率低，无固定节奏</li>
+                            <li>• 内容无系列化，缺乏连贯性</li>
+                            <li>• 标题/封面吸引力弱，点击率低</li>
+                        </ul>
+                    </div>
+                    
+                    <h4 class="font-medium mb-3">优化方向</h4>
+                    <div class="text-neutral-700 text-sm">
+                        <p>• 开设"批发商指南"和"产品实测"系列内容</p>
+                        <p>• 优化标题与封面，提高点击率</p>
+                        <p>• 固定更新频率，增加Shorts内容</p>
+                    </div>
+                </div>
+                
+                <!-- 其他平台 -->
+                <div class="bg-white rounded-xl shadow-md p-8 card-hover">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-neutral-200 rounded-full flex items-center justify-center mr-4">
+                            <i class="fa fa-th-large text-neutral-700 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">其他平台</h3>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Facebook -->
+                        <div>
+                            <h4 class="font-medium mb-2 flex items-center">
+                                <i class="fa fa-facebook text-[#1877F2] mr-2"></i> Facebook (Wephone Accesorios)
+                            </h4>
+                            <div class="bg-neutral-50 p-4 rounded-lg">
+                                <p class="text-neutral-700 text-sm">
+                                    • 粉丝数：18 | 内容更新停滞，几乎无互动
+                                </p>
+                                <p class="text-neutral-700 text-sm mt-2">
+                                    优化方向：若资源有限可暂停维护，或每周同步官网新品
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 移动App -->
+                        <div>
+                            <h4 class="font-medium mb-2 flex items-center">
+                                <i class="fa fa-mobile text-primary mr-2"></i> 移动App (威锋数码)
+                            </h4>
+                            <div class="bg-neutral-50 p-4 rounded-lg">
+                                <p class="text-neutral-700 text-sm">
+                                    • 定位：产品目录+移动下单工具 | 下载量：约30次
+                                </p>
+                                <p class="text-neutral-700 text-sm mt-2">
+                                    优化方向：多渠道添加下载入口，确保商品目录与官网同步
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Google Business Profile -->
+                        <div>
+                            <h4 class="font-medium mb-2 flex items-center">
+                                <i class="fa fa-map-marker text-[#4285F4] mr-2"></i> Google Business Profile
+                            </h4>
+                            <div class="bg-neutral-50 p-4 rounded-lg">
+                                <p class="text-neutral-700 text-sm">
+                                    • 已有商户条目，但信息未完善（无照片、评价少）
+                                </p>
+                                <p class="text-neutral-700 text-sm mt-2">
+                                    优化方向：完善基本信息，上传仓库实景，鼓励客户评价
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 社交媒体内容表现 -->
+            <div class="bg-white rounded-xl shadow-md p-8">
+                <h3 class="text-xl font-semibold mb-8 text-center">社交媒体内容表现分析</h3>
+                
+                <div class="h-80">
+                    <canvas id="contentPerformanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO表现分析部分 -->
+    <section id="seo" class="py-20 bg-neutral-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 text-dark">SEO表现分析</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-neutral-700 text-lg leading-relaxed">
+                    基于Google西班牙区域公开SERP数据，WEPhoneShop核心关键词排名处于"可见但非优势"状态
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-8 mb-12">
+                <h3 class="text-xl font-semibold mb-8 text-center">核心关键词排名现状</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-neutral-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">关键词</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">Google排名</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">竞争对手情况</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">表现评估</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-neutral-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">mayorista accesorios móviles</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">第5位</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">前4位：Cool Accesorios、Digital Ome、We Accessory</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">可见但非优势</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">mayorista fundas móviles</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">第4位</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">前3位：Apokin、We Accessory、Digital Ome</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">表现一般</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">mayorista fundas iPhone</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">第5位</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">含专门iPhone配件网站</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">有优化空间</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">accesorios móviles Fuenlabrada</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">首页中段</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">本地批发商及服务商</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">本地关联已建立</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">wephone mayorista</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">第1-3位</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500">无直接竞争对手</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">表现强势</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- SEO问题与优化 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-md p-8">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <i class="fa fa-exclamation-circle text-danger mr-2"></i> SEO核心问题
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i class="fa fa-times text-red-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-neutral-700">
+                                    内容覆盖不足，缺乏机型/材质细分页，未能充分覆盖长尾关键词
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i class="fa fa-times text-red-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-neutral-700">
+                                    反向链接数量少，权威性不足，难以超越头部竞争对手
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i class="fa fa-times text-red-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-neutral-700">
+                                    多语言内容缺失，无法覆盖华人及国际客户群体的搜索需求
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i class="fa fa-times text-red-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-neutral-700">
+                                    技术SEO基础薄弱，元标签重复，图片缺少Alt文本，无结构化数据
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-md p-8">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <i class="fa fa-lightbulb-o text-primary mr-2"></i> SEO优化方向
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-primary pl-4 py-1">
+                            <h4 class="font-medium">内容丰富与细分</h4>
+                            <p class="text-neutral-600 text-sm mt-1">
+                                针对热门机型创建专属着陆页，新增材质细分页，博客每月更新原创内容
+                            </p>
+                        </div>
+                        
+                        <div class="border-l-4 border-primary pl-4 py-1">
+                            <h4 class="font-medium">反向链接建设</h4>
+                            <p class="text-neutral-600 text-sm mt-1">
+                                提交网站至西班牙批发行业目录，与行业博客合作，社媒添加官网链接
+                            </p>
+                        </div>
+                        
+                        <div class="border-l-4 border-primary pl-4 py-1">
+                            <h4 class="font-medium">本地SEO强化</h4>
+                            <p class="text-neutral-600 text-sm mt-1">
+                                优化Google Business Profile，官网添加Google地图嵌入，发布本地导向内容
+                            </p>
+                        </div>
+                        
+                        <div class="border-l-4 border-primary pl-4 py-1">
+                            <h4 class="font-medium">多语言SEO补充</h4>
+                            <p class="text-neutral-600 text-sm mt-1">
+                                中文页面优化华人市场关键词，英文页面针对欧洲客户优化
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 整体策略部分 -->
+    <section id="strategy" class="py-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-6 text-dark">战略方向</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-8"></div>
+                <p class="text-neutral-700 text-lg leading-relaxed">
+                    客户分层与平台矩阵优化，实现B端与C端业务协同发展
+                </p>
+            </div>
+            
+            <!-- 定制类业务独立社交账号 -->
+            <div class="bg-white rounded-xl shadow-md p-8 mb-12 card-hover">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mr-4">
+                        <i class="fa fa-paint-brush text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">定制类业务独立社交账号</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-medium text-lg mb-4">背景与问题</h4>
+                        <p class="text-neutral-700 mb-4">
+                            现有TikTok/Instagram等账号以"批发+配件"为主，内容偏硬核B端，定制业务亮点被稀释，难以形成独立品牌认知。
+                        </p>
+                        
+                        <div class="bg-neutral-50 p-5 rounded-lg">
+                            <h5 class="font-medium mb-3">主要挑战</h5>
+                            <ul class="space-y-2 text-neutral-700 text-sm">
+                                <li>• 定制业务在综合账号中曝光不足</li>
+                                <li>• B端客户可能被C端内容干扰</li>
+                                <li>• 难以建立定制业务的专业形象</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-lg mb-4">战略方向</h4>
+                        <p class="text-neutral-700 mb-4">
+                            建立独立社交矩阵，专注定制业务，强化品牌心智，同时降低B端客户被C端内容干扰的风险。
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="bg-neutral-50 p-4 rounded-lg text-center">
+                                <i class="fa fa-tiktok text-[#000000] text-2xl mb-2"></i>
+                                <p class="text-sm font-medium">TikTok</p>
+                            </div>
+                            <div class="bg-neutral-50 p-4 rounded-lg text-center">
+                                <i class="fa fa-instagram text-[#E1306C] text-2xl mb-2"></i>
+                                <p class="text-sm font-medium">Instagram</p>
+                            </div>
+                            <div class="bg-neutral-50 p-4 rounded-lg text-center">
+                                <i class="fa fa-pinterest-p text-[#BD081C] text-2xl mb-2"></i>
+                                <p class="text-sm font-medium">Pinterest</p>
+                            </div>
+                            <div class="bg-neutral-50 p-4 rounded-lg text-center">
+                                <i class="fa fa-book text-[#E60023] text-2xl mb-2"></i>
+                                <p class="text-sm font-medium">小红书</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-neutral-700 text-sm">
+                            账号定位：专注"来图定制、宠物/情侣/礼物、潮流个性化"，视觉与语气更贴近C端与小B客户。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 独立零售站承接C端流量 -->
+            <div class="bg-white rounded-xl shadow-md p-8 mb-12 card-hover">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                        <i class="fa fa-shopping-cart text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">独立零售站（D2C）承接C端爆款流量</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-medium text-lg mb-4">背景与问题</h4>
+                        <p class="text-neutral-700 mb-4">
+                            B2B站以注册看价为主，不适合直接承接C端零售订单；当某个爆款在社媒走红，大量C端流量涌入，难以有效转化，造成流量浪费。
+                        </p>
+                        
+                        <div class="bg-neutral-50 p-5 rounded-lg">
+                            <h5 class="font-medium mb-3">主要挑战</h5>
+                            <ul class="space-y-2 text-neutral-700 text-sm">
+                                <li>• B2B与C端客户需求与体验路径不同</li>
+                                <li>• 批发与零售定价体系冲突</li>
+                                <li>• 缺乏专门针对C端的购物体验</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-lg mb-4">战略方向</h4>
+                        <p class="text-neutral-700 mb-4">
+                            新建独立零售站，分离B端和C端流量，实现不同路径最大化转化。
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-neutral-50 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">成品零售站</h5>
+                                <p class="text-neutral-700 text-sm">
+                                    承接爆款配件（手机壳/钢化膜等），适合社媒广告与KOL带货
+                                </p>
+                            </div>
+                            
+                            <div class="bg-neutral-50 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">定制零售站</h5>
+                                <p class="text-neutral-700 text-sm">
+                                    专注"个性化定制"，涵盖手机壳、画布、相框、礼物等
+                                </p>
+                            </div>
+                            
+                            <div class="bg-neutral-50 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2">风险控制</h5>
+                                <p class="text-neutral-700 text-sm">
+                                    零售价与批发价严格区隔，批发客户享受阶梯价与大单优惠，零售只做"单件快速满足"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 中文B端客户渠道加强 -->
+            <div class="bg-white rounded-xl shadow-md p-8 card-hover">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center mr-4">
+                        <i class="fa fa-users text-success text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">中文B端客户渠道加强</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-[#000000] rounded-full flex items-center justify-center mx-auto">
+                                <i class="fa fa-music text-white text-2xl"></i>
+                            </div>
+                            <h4 class="font-medium mt-3">抖音（中文账号）</h4>
+                        </div>
+                        
+                        <div class="bg-neutral-50 p-5 rounded-lg">
+                            <h5 class="font-medium mb-3">内容方向</h5>
+                            <ul class="space-y-2 text-neutral-700 text-sm">
+                                <li>• 上新介绍、仓库实景</li>
+                                <li>• 批发流程、清仓促销</li>
+                                <li>• 中文直观讲解，带微信/WhatsApp联系方式</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-[#E60023] rounded-full flex items-center justify-center mx-auto">
+                                <i class="fa fa-book text-white text-2xl"></i>
+                            </div>
+                            <h4 class="font-medium mt-3">小红书</h4>
+                        </div>
+                        
+                        <div class="bg-neutral-50 p-5 rounded-lg">
+                            <h5 class="font-medium mb-3">内容方向</h5>
+                            <ul class="space-y-2 text-neutral-700 text-sm">
+                                <li>• 行业干货 + 案例展示</li>
+                                <li>• 西班牙批发市场行情</li>
+                                <li>• 最新款式开箱分享</li>
+                                <li>• 定制案例分享</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-[#FF0000] rounded-full flex items-center justify-center mx-auto">
+                                <i class="fa fa-youtube-play text-white text-2xl"></i>
+                            </div>
+                            <h4 class="font-medium mt-3">YouTube 中文频道</h4>
+                        </div>
+                        
+                        <div class="bg-neutral-50 p-5 rounded-lg">
+                            <h5 class="font-medium mb-3">内容方向</h5>
+                            <ul class="space-y-2 text-neutral-700 text-sm">
+                                <li>• 批发采购指南</li>
+                                <li>• 定制工艺介绍</li>
+                                <li>• 展会Vlog</li>
+                                <li>• 同步热门内容，配中文字幕</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-primary/5 p-6 rounded-lg">
+                    <h4 class="font-medium mb-3 text-center">目标</h4>
+                    <p class="text-neutral-700 text-center">
+                        建立中文私域流量池，形成批发客户教育→咨询→下单的完整链路，充分挖掘华人批发客户市场潜力
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.remove('bg-white/90');
+                navbar.classList.add('bg-white');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.add('bg-white/90');
+                navbar.classList.remove('bg-white');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // 关闭移动菜单
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // 社交媒体粉丝分布图表
+        const socialCtx = document.getElementById('socialMediaChart').getContext('2d');
+        new Chart(socialCtx, {
+            type: 'pie',
+            data: {
+                labels: ['TikTok', 'Instagram', 'YouTube', 'Facebook'],
+                datasets: [{
+                    data: [13300, 809, 24, 18],
+                    backgroundColor: [
+                        'rgba(0, 0, 0, 0.8)',
+                        'rgba(225, 48, 108, 0.8)',
+                        'rgba(255, 0, 0, 0.8)',
+                        'rgba(24, 119, 242, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 0, 0, 1)',
+                        'rgba(225, 48, 108, 1)',
+                        'rgba(255, 0, 0, 1)',
+                        'rgba(24, 119, 242, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 关键词排名图表
+        const keywordCtx = document.getElementById('keywordRankingChart').getContext('2d');
+        new Chart(keywordCtx, {
+            type: 'bar',
+            data: {
+                labels: ['mayorista accesorios móviles', 'mayorista fundas móviles', 'mayorista fundas iPhone', 'accesorios móviles Fuenlabrada', 'wephone mayorista'],
+                datasets: [{
+                    label: 'Google排名（越低越好）',
+                    data: [5, 4, 5, 7, 2],
+                    backgroundColor: [
+                        'rgba(255, 125, 0, 0.7)',
+                        'rgba(255, 125, 0, 0.7)',
+                        'rgba(255, 125, 0, 0.7)',
+                        'rgba(255, 125, 0, 0.7)',
+                        'rgba(0, 180, 42, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 125, 0, 1)',
+                        'rgba(255, 125, 0, 1)',
+                        'rgba(255, 125, 0, 1)',
+                        'rgba(255, 125, 0, 1)',
+                        'rgba(0, 180, 42, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        reverse: true,
+                        title: {
+                            display: true,
+                            text: '搜索结果排名'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 社交媒体内容表现分析
+        const contentPerformanceCtx = document.getElementById('contentPerformanceChart').getContext('2d');
+        new Chart(contentPerformanceCtx, {
+            type: 'bar',
+            data: {
+                labels: ['产品演示', '真实测试', '仓库实景', '促销活动', '教程知识', '客户案例'],
+                datasets: [
+                    {
+                        label: 'TikTok 平均播放量',
+                        data: [3500, 45000, 8000, 5000, 0, 0],
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        borderColor: 'rgba(0, 0, 0, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Instagram 平均互动量',
+                        data: [45, 120, 60, 80, 0, 0],
+                        backgroundColor: 'rgba(225, 48, 108, 0.7)',
+                        borderColor: 'rgba(225, 48, 108, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'YouTube 平均播放量',
+                        data: [650, 3200, 800, 500, 0, 0],
+                        backgroundColor: 'rgba(255, 0, 0, 0.7)',
+                        borderColor: 'rgba(255, 0, 0, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: '不同类型内容在各平台的表现'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        type: 'logarithmic',
+                        title: {
+                            display: true,
+                            text: '互动量/播放量（对数刻度）'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
